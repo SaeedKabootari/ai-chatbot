@@ -122,7 +122,9 @@ function PureMultimodalInput({
   const [prompt, setPrompt] = useState(2);
 
   useEffect(() => {
+
     console.log(prompt);
+    
   }, [prompt]);
 
   const submitForm = useCallback(() => {
