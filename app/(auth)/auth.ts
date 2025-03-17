@@ -33,6 +33,7 @@ export const {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
+        console.log('ssss',user)
         token.id = user.id;
       }
 
