@@ -26,7 +26,13 @@ export const {
         // biome-ignore lint: Forbidden non-null assertion.
         const passwordsMatch = await compare(password, users[0].password!);
         if (!passwordsMatch) return null;
-        return users[0] as any;
+        // return users[0] as any;
+        return {
+          id: users[0].id,
+          email: users[0].email,
+          role: users[0].role,                 
+          promptBalance: users[0].promptBalance, 
+        } as User;
       },
     }),
   ],
@@ -35,6 +41,8 @@ export const {
       if (user) {
         console.log('ssss',user)
         token.id = user.id;
+        token.role = user.role;               
+        token.promptBalance = user.promptBalance;
       }
 
       return token;
@@ -48,6 +56,8 @@ export const {
     }) {
       if (session.user) {
         session.user.id = token.id as string;
+        session.user.role = token.role
+        session.user.promptBalance  =token.promptBalance 
       }
 
       return session;
