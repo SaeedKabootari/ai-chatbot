@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Toaster } from 'sonner';
 
 import { ThemeProvider } from '@/components/theme-provider';
+import { SessionProvider } from 'next-auth/react';
+
 
 import './globals.css';
 
@@ -57,6 +59,7 @@ export default async function RootLayout({
         />
       </head>
       <body className="antialiased">
+        <SessionProvider>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -66,6 +69,7 @@ export default async function RootLayout({
           <Toaster position="top-center" />
           {children}
         </ThemeProvider>
+        </SessionProvider>
       </body>
     </html>
   );
