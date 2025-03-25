@@ -360,15 +360,41 @@ export async function decrementPromptBalance(email: string) {
           .update(user)
           .set({ promptBalance: updatedBalance })
           .where(eq(user.email, email));
-        return usersArray[0].promptBalance;
-      }else{
-        return 0
+        return updatedBalance;
+      } else {
+        return 0;
       }
     } else {
-      return false
+      return false;
     }
   } catch (error) {
     console.error("Failed to decrement PromptBalance in database");
+    throw error;
+  }
+}
+
+export async function increasePromptBalance(email: string, value: number) {
+  try {
+    const usersArray = await db
+      .select()
+      .from(user)
+      .where(eq(user.email, email));
+    if (usersArray.length > 0) {
+      const firstUser = usersArray[0];
+      console.log(firstUser.promptBalance)
+      if (firstUser.promptBalance !==undefined && firstUser.promptBalance !==null) {
+        const updatedBalance = firstUser.promptBalance + value;
+        await db
+          .update(user)
+          .set({ promptBalance: updatedBalance })
+          .where(eq(user.email, email));
+        return updatedBalance;
+      }else{
+        return false
+      }
+    }
+  } catch (error) {
+    console.error("Failed to increase PromptBalance in database");
     throw error;
   }
 }
