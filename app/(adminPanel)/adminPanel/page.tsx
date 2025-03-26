@@ -1,4 +1,8 @@
 "use client";
+import AddUserModal from "@/components/admin-panel/AddUserModal";
+import DeleteUserModal from "@/components/admin-panel/DeleteUserModal";
+import EditUserModal from "@/components/admin-panel/EditUserModal";
+import PromptBalanceModal from "@/components/admin-panel/PromptBalanceModal";
 import {
   Table,
   TableBody,
@@ -16,42 +20,34 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-import { Plus } from "lucide-react";
-import { Pencil } from "lucide-react";
-import { Trash2 } from "lucide-react";
 
-import ModalButton from "@/components/admin-panel/ModalButton";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { useState } from "react";
 
 export default function AdminPanel() {
   // State for managing the dialog
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  // const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [balanceModal, setBalanceModal] = useState(false);
   const [addUserModal, setAddUserModal] = useState(false);
   const [deleteUserModal, setDeleteUserModal] = useState(false);
   const [editUserModal, setEditUserModal] = useState(false);
 
-  // Function to open the dialog
-  const openDialog = () => {
-    setIsDialogOpen(true);
-  };
+  // // Function to open the dialog
+  // const openDialog = () => {
+  //   setIsDialogOpen(true);
+  // };
 
-  // Function to close the dialog
-  const closeDialog = () => {
-    setIsDialogOpen(false);
-  };
+  // // Function to close the dialog
+  // const closeDialog = () => {
+  //   setIsDialogOpen(false);
+  // };
 
   return (
     <>
+    <AddUserModal
+                open={addUserModal}
+                onOpenChange={setAddUserModal}
+                modalButtonClick={() => setAddUserModal(true)}
+              />
       <Table>
         <TableCaption>user management table</TableCaption>
         <TableHeader>
@@ -70,37 +66,7 @@ export default function AdminPanel() {
             <TableCell>admin</TableCell>
             <TableCell>125000</TableCell>
             <TableCell className="flex gap-[10px]">
-              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <ModalButton onClick={openDialog} tooltipText="Delete User">
-                  <Trash2 />
-                </ModalButton>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Are you absolutely sure?</DialogTitle>
-                    <DialogDescription>
-                      This action cannot be undone. This will permanently delete
-                      your account and remove your data from our servers.
-                    </DialogDescription>
-                  </DialogHeader>
-                </DialogContent>
-              </Dialog>
-
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <button>
-                    <Pencil />
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent>Edit User</TooltipContent>
-              </Tooltip>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <button>
-                    <Plus />
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent>Add Balance</TooltipContent>
-              </Tooltip>
+           
             </TableCell>
           </TableRow>
 
@@ -110,14 +76,22 @@ export default function AdminPanel() {
             <TableCell>admin</TableCell>
             <TableCell>125000</TableCell>
             <TableCell>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <button>
-                    <Trash2 />
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent>Delete User</TooltipContent>
-              </Tooltip>
+            
+             <DeleteUserModal
+                open={deleteUserModal}
+                onOpenChange={setDeleteUserModal}
+                modalButtonClick={() => setDeleteUserModal(true)}
+              />
+              <EditUserModal
+                open={editUserModal}
+                onOpenChange={setEditUserModal}
+                modalButtonClick={() => setEditUserModal(true)}
+              />
+              <PromptBalanceModal
+                open={balanceModal}
+                onOpenChange={setBalanceModal}
+                modalButtonClick={() => setBalanceModal(true)}
+              />
             </TableCell>
           </TableRow>
         </TableBody>

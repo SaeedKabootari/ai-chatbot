@@ -1,4 +1,4 @@
-import { Trash } from "lucide-react";
+import { Plus } from "lucide-react";
 import ModalButton from "@/components/admin-panel/ModalButton";
 import {
   Dialog,
@@ -9,21 +9,21 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-interface DeleteUserModalProps {
+interface PromptBalanceModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   modalButtonClick: () => void;
 }
 
-const DeleteUserModal: React.FC<DeleteUserModalProps> = (props) => {
+const PromptBalanceModal: React.FC<PromptBalanceModalProps> = (props) => {
   return (
     <Dialog open={props.open} onOpenChange={props.onOpenChange}>
-      <ModalButton onClick={props.modalButtonClick} tooltipText="Delete User">
-        <Trash />
+      <ModalButton onClick={props.modalButtonClick} tooltipText="Add Balance">
+        <Plus />
       </ModalButton>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Are you absolutely sure? delete</DialogTitle>
+          <DialogTitle>Are you absolutely sure? balance</DialogTitle>
           <DialogDescription>
             This action cannot be undone. This will permanently delete your
             account and remove your data from our servers.
@@ -34,4 +34,4 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = (props) => {
   );
 };
 
-export default DeleteUserModal;
+export default PromptBalanceModal;
