@@ -20,6 +20,8 @@ import { Plus } from "lucide-react";
 import { Pencil } from "lucide-react";
 import { Trash2 } from "lucide-react";
 
+import ModalButton from "@/components/admin-panel/ModalButton";
+
 import {
   Dialog,
   DialogContent,
@@ -33,6 +35,10 @@ import { useState } from "react";
 export default function AdminPanel() {
   // State for managing the dialog
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [balanceModal, setBalanceModal] = useState(false);
+  const [addUserModal, setAddUserModal] = useState(false);
+  const [deleteUserModal, setDeleteUserModal] = useState(false);
+  const [editUserModal, setEditUserModal] = useState(false);
 
   // Function to open the dialog
   const openDialog = () => {
@@ -65,15 +71,9 @@ export default function AdminPanel() {
             <TableCell>125000</TableCell>
             <TableCell className="flex gap-[10px]">
               <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button onClick={openDialog}>
-                      <Trash2 />
-                    </button>
-                  </TooltipTrigger>
-                  <TooltipContent>Delete User</TooltipContent>
-                </Tooltip>
-
+                <ModalButton onClick={openDialog} tooltipText="Delete User">
+                  <Trash2 />
+                </ModalButton>
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Are you absolutely sure?</DialogTitle>
