@@ -7,7 +7,7 @@ export default function PromptBalance() {
   const { data: session, status } = useSession();
 
   console.log(session);
-  
+
   const decrementBalanceHandler = useCallback(async () => {
     console.log("decrement");
     try {
@@ -56,6 +56,26 @@ export default function PromptBalance() {
     }
   }, []);
 
+  const deleteUserHandler = useCallback(async () => {
+    console.log("delete user");
+    try {
+      const res = await fetch("/api/user", {
+        method: "DELETE",
+        body: JSON.stringify({ id: "342e396d-f153-4f95-808b-d3d3e0a8c423" }),
+        headers: {
+          "Content-Type": "application/json", // Add content type header
+        },
+      });
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const json = await res.json();
+      console.log(json);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  }, []);
+
   return (
     <>
       <button className="bg-red-300" onClick={decrementBalanceHandler}>
@@ -66,6 +86,9 @@ export default function PromptBalance() {
       </button>
       <button className="bg-green-300 ml-2" onClick={getUsersHandler}>
         get users
+      </button>
+      <button className="bg-purple-300 ml-2" onClick={deleteUserHandler}>
+        delete user
       </button>
     </>
   );

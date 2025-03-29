@@ -420,3 +420,64 @@ export async function getUsers() {
     throw error;
   }
 }
+
+// export async function deleteUser(id: string) {
+//   try {
+//     const deletedUser = await db.delete(user).where(eq(user.id, id)).execute();
+//     console.log("||||||||||||||||||||||||||||||||||||||||", deletedUser);
+//     return deletedUser;
+//   } catch (error) {
+//     console.error("Failed to delete user:", error);
+//     throw error;
+//   }
+// }
+
+// export async function deleteUser(id: string) {
+//   try {
+//     // Step 1: Delete all Message records associated with the Chats of the user
+//     // Get all Chats associated with the user first
+//     const chats = await db.select()
+//       .from(chat)
+//       .where(eq(chat.userId, id)) // Assuming userId is the foreign key in the Chat table
+//       .execute();
+
+//     // Step 2: Delete all Messages associated with the retrieved Chats
+//     await Promise.all(chats.map(async (chat) => {
+//       await db.delete(message) // Assuming 'message' is the table name for messages
+//         .where(eq(message.chatId, chat.id)) // Make sure chat.id is the correct identifier
+//         .execute();
+//     }));
+
+//     // Step 3: Delete all the Chats for the user
+//     await db.delete(chat)
+//       .where(eq(chat.userId, id))
+//       .execute();
+
+//     // Step 4: Finally, delete the User
+//     const deletedUser = await db.delete(user).where(eq(user.id, id)).execute();
+//     return deletedUser;
+//   } catch (error) {
+//     console.error("Failed to delete user:", error);
+//     throw error;
+//   }
+// }
+
+export async function deleteUser(id: string) {
+  try {
+    const chats = await db.select().from(chat).where(eq(chat.userId, id));
+
+    await Promise.all(
+      chats.map(async (chat) => {
+        await db.delete(message).where(eq(message.chatId, chat.id)).execute();
+      })
+    );
+
+    await db.delete(chat).where(eq(chat.userId, id)).execute();
+
+    const deletedUser = await db.delete(user).where(eq(user.id, id)).execute();
+    return deletedUser;
+  } catch (error) {
+    console.error("Failed to delete user:", error);
+    throw error;
+  }
+}
