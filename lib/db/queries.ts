@@ -17,6 +17,7 @@ import {
   vote,
 } from "./schema";
 import { ArtifactKind } from "@/components/artifact";
+import PromptBalance from "@/app/(promptBalance)/promptBalance/page";
 
 // Optionally, if not using email/pass login, you can
 // use the Drizzle adapter for Auth.js / NextAuth
@@ -381,20 +382,41 @@ export async function increasePromptBalance(email: string, value: number) {
       .where(eq(user.email, email));
     if (usersArray.length > 0) {
       const firstUser = usersArray[0];
-      console.log(firstUser.promptBalance)
-      if (firstUser.promptBalance !==undefined && firstUser.promptBalance !==null) {
+      console.log(firstUser.promptBalance);
+      if (
+        firstUser.promptBalance !== undefined &&
+        firstUser.promptBalance !== null
+      ) {
         const updatedBalance = firstUser.promptBalance + value;
         await db
           .update(user)
           .set({ promptBalance: updatedBalance })
           .where(eq(user.email, email));
         return updatedBalance;
-      }else{
-        return false
+      } else {
+        return false;
       }
     }
   } catch (error) {
     console.error("Failed to increase PromptBalance in database");
+    throw error;
+  }
+}
+
+export async function getUsers() {
+  try {
+    const usersArray = await db.select().from(user);
+    const users = usersArray.map((item) => ({
+      email: item.email,
+      id: item.id,
+      promptBalance: item.promptBalance,
+      role: item.role,
+    }));
+    console.log(usersArray);
+    console.log(users);
+    return users;
+  } catch (error) {
+    console.log("Failed to get users from database");
     throw error;
   }
 }

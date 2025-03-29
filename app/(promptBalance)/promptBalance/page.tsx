@@ -7,7 +7,9 @@ export default function PromptBalance() {
   const { data: session, status } = useSession();
 
   console.log(session);
+  
   const decrementBalanceHandler = useCallback(async () => {
+    console.log("decrement");
     try {
       const res = await fetch("/api/promptBalance", {
         method: "POST",
@@ -40,6 +42,20 @@ export default function PromptBalance() {
     }
   }, []);
 
+  const getUsersHandler = useCallback(async () => {
+    console.log("get users");
+    try {
+      const res = await fetch("/api/user");
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const json = await res.json();
+      console.log(json);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  }, []);
+
   return (
     <>
       <button className="bg-red-300" onClick={decrementBalanceHandler}>
@@ -47,6 +63,9 @@ export default function PromptBalance() {
       </button>
       <button className="bg-blue-300 ml-2" onClick={increaseBalanceHandler}>
         increment Balance
+      </button>
+      <button className="bg-green-300 ml-2" onClick={getUsersHandler}>
+        get users
       </button>
     </>
   );
