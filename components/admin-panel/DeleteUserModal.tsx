@@ -4,10 +4,12 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Button } from "../ui/button";
 
 interface DeleteUserModalProps {
   open: boolean;
@@ -23,12 +25,22 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = (props) => {
       </ModalButton>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Are you absolutely sure? delete</DialogTitle>
+          <DialogTitle>Delete User</DialogTitle>
           <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            Are you sure you want delete this user?
+            <div className="flex flex-col">
+              <span>Username:</span>
+              <span>Email: </span>
+              <span>ID: </span>
+            </div>
           </DialogDescription>
         </DialogHeader>
+        <DialogFooter>
+          <Button variant="outline" onClick={() => props.onOpenChange(false)}>
+            cancel
+          </Button>
+          <Button>continue</Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

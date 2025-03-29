@@ -4,6 +4,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -27,8 +28,7 @@ interface EditUserModalProps {
 }
 
 const EditUserModal: React.FC<EditUserModalProps> = (props) => {
-
-    const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
   return (
     <Dialog open={props.open} onOpenChange={props.onOpenChange}>
@@ -37,11 +37,11 @@ const EditUserModal: React.FC<EditUserModalProps> = (props) => {
       </ModalButton>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Are you absolutely sure? edit</DialogTitle>
-          <DialogDescription>
+          <DialogTitle>Edit User</DialogTitle>
+          {/* <DialogDescription>
             This action cannot be undone. This will permanently delete your
             account and remove your data from our servers.
-          </DialogDescription>
+          </DialogDescription> */}
         </DialogHeader>
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="email">Email</Label>
@@ -52,7 +52,7 @@ const EditUserModal: React.FC<EditUserModalProps> = (props) => {
           <Input type="password" id="password" placeholder="Password" />
         </div>
         <div className="grid w-full max-w-sm items-center gap-1.5">
-        <Label htmlFor="role">role</Label>
+          <Label htmlFor="role">role</Label>
           <Select onValueChange={(value) => setSelectedOption(value)}>
             <SelectTrigger>
               <SelectValue placeholder="role" />
@@ -63,12 +63,12 @@ const EditUserModal: React.FC<EditUserModalProps> = (props) => {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex justify-between">
+        <DialogFooter>
           <Button variant="outline" onClick={() => props.onOpenChange(false)}>
             cancel
           </Button>
           <Button>continue</Button>
-        </div>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

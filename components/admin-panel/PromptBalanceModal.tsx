@@ -4,10 +4,15 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 
 interface PromptBalanceModalProps {
   open: boolean;
@@ -23,12 +28,25 @@ const PromptBalanceModal: React.FC<PromptBalanceModalProps> = (props) => {
       </ModalButton>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Are you absolutely sure? balance</DialogTitle>
+          <DialogTitle>Add Prompt Balance</DialogTitle>
           <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            Enter the amount you'd like to add:
           </DialogDescription>
         </DialogHeader>
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="promptBalance">Prompt Balance</Label>
+          <Input
+            type="number"
+            id="promptBalance"
+            placeholder="Enter a number"
+          />
+        </div>
+        <DialogFooter>         
+            <Button variant="outline" onClick={() => props.onOpenChange(false)}>
+              cancel
+            </Button>
+            <Button>continue</Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
