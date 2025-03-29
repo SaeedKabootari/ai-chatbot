@@ -28,11 +28,11 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = (props) => {
           <DialogTitle>Delete User</DialogTitle>
           <DialogDescription>
             Are you sure you want delete this user?
-            <div className="flex flex-col">
+            <span className="flex flex-col">
               <span>Username:</span>
               <span>Email: </span>
               <span>ID: </span>
-            </div>
+            </span>
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
