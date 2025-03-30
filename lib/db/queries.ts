@@ -18,6 +18,7 @@ import {
 } from "./schema";
 import { ArtifactKind } from "@/components/artifact";
 import PromptBalance from "@/app/(promptBalance)/promptBalance/page";
+import { UserRole } from "@/auth";
 
 // Optionally, if not using email/pass login, you can
 // use the Drizzle adapter for Auth.js / NextAuth
@@ -478,6 +479,51 @@ export async function deleteUser(id: string) {
     return deletedUser;
   } catch (error) {
     console.error("Failed to delete user:", error);
+    throw error;
+  }
+}
+
+interface UserUpdateParams {
+  role?: UserRole;
+  email?: string;
+  password?: string;
+}
+
+export async function editUser(
+  id: string,
+  role?: UserRole,
+  email?: string,
+  password?: string
+) {
+  try {
+    const findedUser = await db.select().from(user).where(eq(user.id, id));
+    if (!findedUser) {
+      throw new Error("User not found");
+    }
+    
+    const updatedUser: Partial<UserUpdateParams> = {};
+    if (role) {
+      updatedUser.role = role;
+    }
+    if (email) {
+      updatedUser.email = email;
+    }
+    if (password) {
+      const salt = genSaltSync(10);
+      const hash = hashSync(password, salt);
+      updatedUser.password = hash;
+    }
+
+    await db.update(user).set(updatedUser).where(eq(user.id, id));
+
+    const finalUpdatedUser = await db
+      .select()
+      .from(user)
+      .where(eq(user.id, id));
+
+    return finalUpdatedUser[0];
+  } catch (error) {
+    console.error("Failed to edit user:", error);
     throw error;
   }
 }

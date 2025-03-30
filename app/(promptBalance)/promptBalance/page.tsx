@@ -76,6 +76,31 @@ export default function PromptBalance() {
     }
   }, []);
 
+  const editUserHandler = useCallback(async () => {
+    console.log("edit user");
+    try {
+      const res = await fetch("/api/user", {
+        method: "PUT",
+        body: JSON.stringify({
+          id: "32ca00e6-b960-4807-99cd-08cd63d56163",
+          email: "rex@yahoo.com",
+          role: "user",
+          password: '12121212'
+        }),
+        headers: {
+          "Content-Type": "application/json", // Add content type header
+        },
+      });
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const json = await res.json();
+      console.log(json);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  }, []);
+
   return (
     <>
       <button className="bg-red-300" onClick={decrementBalanceHandler}>
@@ -89,6 +114,9 @@ export default function PromptBalance() {
       </button>
       <button className="bg-purple-300 ml-2" onClick={deleteUserHandler}>
         delete user
+      </button>
+      <button className="bg-orange-300 ml-2" onClick={editUserHandler}>
+        edit user
       </button>
     </>
   );

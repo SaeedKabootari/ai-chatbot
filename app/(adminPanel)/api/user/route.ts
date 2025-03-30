@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { deleteUser, getUsers } from "@/lib/db/queries";
+import { deleteUser, editUser, getUsers } from "@/lib/db/queries";
 
 // import { NextResponse, NextRequest } from "next/server";
 // import {
@@ -35,9 +35,21 @@ export async function GET(request: Request) {
 export async function DELETE(request: Request) {
   try {
     const body = await request.json();
-    const deletedUser = await deleteUser(body.id);
+    // const deletedUser = await deleteUser(body.id);
     // console.log('sssssssssssssssssssssssssssssssssss' ,deletedUser)
-    return NextResponse.json({ deletedUser: deletedUser }, { status: 200 });
+    return NextResponse.json({ deletedUser: {} }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 400 });
+  }
+}
+
+export async function PUT(request: Request) {
+  try {
+    const body = await request.json();
+    const { id, role, email, password } = body;
+    const editedUser = await editUser(id, role, email, password);
+
+    return NextResponse.json({ editedUser: editedUser }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error }, { status: 400 });
   }
