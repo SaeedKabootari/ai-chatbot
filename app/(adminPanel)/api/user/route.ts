@@ -32,7 +32,8 @@ export async function GET(request: Request) {
     // console.log(body);
     console.log("rrrrrrrrrrrrrrrrrrr", request);
     const users = await getUsers();
-    return NextResponse.json({ users: users }, { status: 200 });
+    // return NextResponse.json({ users: users }, { status: 200 });
+    return NextResponse.json(users, { status: 200 }); // Return the users array directly
   } catch (error) {
     return NextResponse.json({ error }, { status: 400 });
   }

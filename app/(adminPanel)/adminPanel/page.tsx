@@ -19,12 +19,15 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { User } from "@/lib/db/schema";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function AdminPanel() {
   // State for managing the dialog
   // const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const [users, setUsers] = useState<User[]>();
   const [balanceModal, setBalanceModal] = useState(false);
   const [addUserModal, setAddUserModal] = useState(false);
   const [deleteUserModal, setDeleteUserModal] = useState(false);
@@ -39,6 +42,19 @@ export default function AdminPanel() {
   // const closeDialog = () => {
   //   setIsDialogOpen(false);
   // };
+
+  useEffect(() => {
+    const getUsers = async () => {
+      const response = await fetch("/api/user");
+      const data = await response.json();
+      // console.log('dddd',JSON.stringify(data))
+      console.log(data);
+      setUsers(data);
+      return data;
+    };
+
+    getUsers();
+  }, []);
 
   return (
     <>
@@ -64,223 +80,31 @@ export default function AdminPanel() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell>
-                  <DeleteUserModal
-                    open={deleteUserModal}
-                    onOpenChange={setDeleteUserModal}
-                    modalButtonClick={() => setDeleteUserModal(true)}
-                  />
-                  <EditUserModal
-                    open={editUserModal}
-                    onOpenChange={setEditUserModal}
-                    modalButtonClick={() => setEditUserModal(true)}
-                  />
-                  <PromptBalanceModal
-                    open={balanceModal}
-                    onOpenChange={setBalanceModal}
-                    modalButtonClick={() => setBalanceModal(true)}
-                  />
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell>
-                  <DeleteUserModal
-                    open={deleteUserModal}
-                    onOpenChange={setDeleteUserModal}
-                    modalButtonClick={() => setDeleteUserModal(true)}
-                  />
-                  <EditUserModal
-                    open={editUserModal}
-                    onOpenChange={setEditUserModal}
-                    modalButtonClick={() => setEditUserModal(true)}
-                  />
-                  <PromptBalanceModal
-                    open={balanceModal}
-                    onOpenChange={setBalanceModal}
-                    modalButtonClick={() => setBalanceModal(true)}
-                  />
-                </TableCell>
-              </TableRow>
-
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell className="flex gap-[10px]"></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell className="flex gap-[10px]"></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell className="flex gap-[10px]"></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell className="flex gap-[10px]"></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell className="flex gap-[10px]"></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell className="flex gap-[10px]"></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell className="flex gap-[10px]"></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell className="flex gap-[10px]"></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell className="flex gap-[10px]"></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell className="flex gap-[10px]"></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell className="flex gap-[10px]"></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell className="flex gap-[10px]"></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell className="flex gap-[10px]"></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell className="flex gap-[10px]"></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell className="flex gap-[10px]"></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell className="flex gap-[10px]"></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell className="flex gap-[10px]"></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell className="flex gap-[10px]"></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell className="flex gap-[10px]"></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell className="flex gap-[10px]"></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell className="flex gap-[10px]"></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>fsdsdsdsdsdsd</TableCell>
-                <TableCell>asasa@gmail.com</TableCell>
-                <TableCell>admin</TableCell>
-                <TableCell>125000</TableCell>
-                <TableCell>
-                  <DeleteUserModal
-                    open={deleteUserModal}
-                    onOpenChange={setDeleteUserModal}
-                    modalButtonClick={() => setDeleteUserModal(true)}
-                  />
-                  <EditUserModal
-                    open={editUserModal}
-                    onOpenChange={setEditUserModal}
-                    modalButtonClick={() => setEditUserModal(true)}
-                  />
-                  <PromptBalanceModal
-                    open={balanceModal}
-                    onOpenChange={setBalanceModal}
-                    modalButtonClick={() => setBalanceModal(true)}
-                  />
-                </TableCell>
-              </TableRow>
+              {users?.map((item, index) => (
+                <TableRow key={index}>
+                  <TableCell>{item.id}</TableCell>
+                  <TableCell>{item.email}</TableCell>
+                  <TableCell>{item.role}</TableCell>
+                  <TableCell>{item.promptBalance}</TableCell>
+                  <TableCell>
+                    <DeleteUserModal
+                      open={deleteUserModal}
+                      onOpenChange={setDeleteUserModal}
+                      modalButtonClick={() => setDeleteUserModal(true)}
+                    />
+                    <EditUserModal
+                      open={editUserModal}
+                      onOpenChange={setEditUserModal}
+                      modalButtonClick={() => setEditUserModal(true)}
+                    />
+                    <PromptBalanceModal
+                      open={balanceModal}
+                      onOpenChange={setBalanceModal}
+                      modalButtonClick={() => setBalanceModal(true)}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>
