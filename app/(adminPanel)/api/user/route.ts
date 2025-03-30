@@ -1,5 +1,11 @@
 import { NextResponse, NextRequest } from "next/server";
-import { deleteUser, editUser, getUsers } from "@/lib/db/queries";
+import {
+  createUser,
+  deleteUser,
+  editUser,
+  getUser,
+  getUsers,
+} from "@/lib/db/queries";
 
 // import { NextResponse, NextRequest } from "next/server";
 // import {
@@ -50,6 +56,29 @@ export async function PUT(request: Request) {
     const editedUser = await editUser(id, role, email, password);
 
     return NextResponse.json({ editedUser: editedUser }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 400 });
+  }
+}
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+    const { email, password } = body;
+
+    const existedUser = await getUser(email);
+    if (existedUser.length === 0) {
+      const registeredUser = await createUser(email, password);
+      return NextResponse.json(
+        { registeredUser: registeredUser },
+        { status: 200 }
+      );
+    } else {
+      return NextResponse.json(
+        { registeredUser: "The user already exists!" },
+        { status: 200 }
+      );
+    }
   } catch (error) {
     return NextResponse.json({ error }, { status: 400 });
   }

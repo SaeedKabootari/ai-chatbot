@@ -101,6 +101,24 @@ export default function PromptBalance() {
     }
   }, []);
 
+
+  const addUserHandler = useCallback(async () => {
+    console.log("add user");
+    try {
+      const res = await fetch("/api/user", {
+        method: "POST",
+        body: JSON.stringify({ email: "sadaf@gmail.com" ,password: '12345678' }),
+      });
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const json = await res.json();
+      console.log(json);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  }, []);
+
   return (
     <>
       <button className="bg-red-300" onClick={decrementBalanceHandler}>
@@ -117,6 +135,9 @@ export default function PromptBalance() {
       </button>
       <button className="bg-orange-300 ml-2" onClick={editUserHandler}>
         edit user
+      </button>
+      <button className="bg-gray-300 ml-2" onClick={addUserHandler}>
+        add user
       </button>
     </>
   );
