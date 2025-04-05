@@ -21,6 +21,8 @@ export const user = pgTable("User", {
 });
 
 export type User = InferSelectModel<typeof user>;
+export type UserWithoutPassword = Omit <User, 'password'>
+
 
 export const chat = pgTable("Chat", {
   id: uuid("id").primaryKey().notNull().defaultRandom(),

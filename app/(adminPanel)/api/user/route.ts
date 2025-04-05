@@ -42,9 +42,9 @@ export async function GET(request: Request) {
 export async function DELETE(request: Request) {
   try {
     const body = await request.json();
-    // const deletedUser = await deleteUser(body.id);
-    // console.log('sssssssssssssssssssssssssssssssssss' ,deletedUser)
-    return NextResponse.json({ deletedUser: {} }, { status: 200 });
+    const deletedUser = await deleteUser(body.id);
+    console.log('sssssssssssssssssssssssssssssssssss' ,body)
+    return NextResponse.json({ deletedUser: deletedUser }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error }, { status: 400 });
   }

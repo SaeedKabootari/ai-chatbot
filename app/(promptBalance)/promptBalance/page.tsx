@@ -61,7 +61,7 @@ export default function PromptBalance() {
     try {
       const res = await fetch("/api/user", {
         method: "DELETE",
-        body: JSON.stringify({ id: "342e396d-f153-4f95-808b-d3d3e0a8c423" }),
+        body: JSON.stringify({ id: "9d134e64-6cb3-421a-aa76-222857a5e0c3"}),
         headers: {
           "Content-Type": "application/json", // Add content type header
         },
@@ -85,7 +85,7 @@ export default function PromptBalance() {
           id: "32ca00e6-b960-4807-99cd-08cd63d56163",
           email: "rex@yahoo.com",
           role: "user",
-          password: '12121212'
+          password: "12121212",
         }),
         headers: {
           "Content-Type": "application/json", // Add content type header
@@ -101,13 +101,15 @@ export default function PromptBalance() {
     }
   }, []);
 
-
   const addUserHandler = useCallback(async () => {
     console.log("add user");
     try {
       const res = await fetch("/api/user", {
         method: "POST",
-        body: JSON.stringify({ email: "sadaf@gmail.com" ,password: '12345678' }),
+        body: JSON.stringify({
+          email: "sadaf@gmail.com",
+          password: "12345678",
+        }),
       });
       if (!res.ok) {
         throw new Error("Network response was not ok");

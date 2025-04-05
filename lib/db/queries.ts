@@ -466,6 +466,7 @@ export async function getUsers() {
 export async function deleteUser(id: string) {
   try {
     const chats = await db.select().from(chat).where(eq(chat.userId, id));
+    console.log('chat' ,chats)
 
     await Promise.all(
       chats.map(async (chat) => {
@@ -476,6 +477,7 @@ export async function deleteUser(id: string) {
     await db.delete(chat).where(eq(chat.userId, id)).execute();
 
     const deletedUser = await db.delete(user).where(eq(user.id, id)).execute();
+    console.log('ssss')
     return deletedUser;
   } catch (error) {
     console.error("Failed to delete user:", error);

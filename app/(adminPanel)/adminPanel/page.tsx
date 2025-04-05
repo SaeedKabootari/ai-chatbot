@@ -19,9 +19,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { User } from "@/lib/db/schema";
+import { User ,UserWithoutPassword} from "@/lib/db/schema";
 
 import { useEffect, useState } from "react";
+
 
 export default function AdminPanel() {
   // State for managing the dialog
@@ -33,6 +34,13 @@ export default function AdminPanel() {
   const [deleteUserModal, setDeleteUserModal] = useState(false);
   const [editUserModal, setEditUserModal] = useState(false);
 
+
+  const [selectedUserId, setSelectedUserId] = useState<string>('');
+  const [selectedUser, setSelectedUser] = useState<User>();
+
+  useEffect(()=>{console.log(selectedUser)},[selectedUser])
+
+
   // // Function to open the dialog
   // const openDialog = () => {
   //   setIsDialogOpen(true);
@@ -43,18 +51,30 @@ export default function AdminPanel() {
   //   setIsDialogOpen(false);
   // };
 
-  useEffect(() => {
-    const getUsers = async () => {
-      const response = await fetch("/api/user");
-      const data = await response.json();
-      // console.log('dddd',JSON.stringify(data))
-      console.log(data);
-      setUsers(data);
-      return data;
-    };
 
-    getUsers();
-  }, []);
+
+  const getUsers = async ()=>{
+    const res = await fetch("/api/user");
+    const data = await res.json();
+    setUsers(data);
+  }
+
+  useEffect(()=>{
+    getUsers()
+  },[])
+
+  // useEffect(() => {
+  //   const getUsers = async () => {
+  //     const response = await fetch("/api/user");
+  //     const data = await response.json();
+  //     // console.log('dddd',JSON.stringify(data))
+  //     console.log(data);
+  //     setUsers(data);
+  //     return data;
+  //   };
+
+  //   getUsers();
+  // }, []);
 
   return (
     <>
@@ -90,7 +110,12 @@ export default function AdminPanel() {
                     <DeleteUserModal
                       open={deleteUserModal}
                       onOpenChange={setDeleteUserModal}
-                      modalButtonClick={() => setDeleteUserModal(true)}
+                      modalButtonClick={() => {
+                        setDeleteUserModal(true);
+                        setSelectedUser(item)
+                      }}
+                      user={selectedUser }
+                      refreshUsers={getUsers}
                     />
                     <EditUserModal
                       open={editUserModal}
