@@ -36,7 +36,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = (props) => {
     } catch (error) {
       console.log("Error fetching data: ", error);
     }
-    props.refreshUsers()
+    await props.refreshUsers()
     props.onOpenChange(false)
   };
 

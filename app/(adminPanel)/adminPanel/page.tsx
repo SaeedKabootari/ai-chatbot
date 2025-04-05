@@ -19,10 +19,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { User ,UserWithoutPassword} from "@/lib/db/schema";
+import { User, UserWithoutPassword } from "@/lib/db/schema";
 
 import { useEffect, useState } from "react";
-
 
 export default function AdminPanel() {
   // State for managing the dialog
@@ -34,12 +33,12 @@ export default function AdminPanel() {
   const [deleteUserModal, setDeleteUserModal] = useState(false);
   const [editUserModal, setEditUserModal] = useState(false);
 
-
-  const [selectedUserId, setSelectedUserId] = useState<string>('');
+  const [selectedUserId, setSelectedUserId] = useState<string>("");
   const [selectedUser, setSelectedUser] = useState<User>();
 
-  useEffect(()=>{console.log(selectedUser)},[selectedUser])
-
+  useEffect(() => {
+    console.log(selectedUser);
+  }, [selectedUser]);
 
   // // Function to open the dialog
   // const openDialog = () => {
@@ -51,17 +50,15 @@ export default function AdminPanel() {
   //   setIsDialogOpen(false);
   // };
 
-
-
-  const getUsers = async ()=>{
+  const getUsers = async () => {
     const res = await fetch("/api/user");
     const data = await res.json();
     setUsers(data);
-  }
+  };
 
-  useEffect(()=>{
-    getUsers()
-  },[])
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   // useEffect(() => {
   //   const getUsers = async () => {
@@ -101,7 +98,7 @@ export default function AdminPanel() {
             </TableHeader>
             <TableBody>
               {users?.map((item, index) => (
-                <TableRow key={index}>
+                <TableRow key={item.id}>
                   <TableCell>{item.id}</TableCell>
                   <TableCell>{item.email}</TableCell>
                   <TableCell>{item.role}</TableCell>
@@ -112,9 +109,9 @@ export default function AdminPanel() {
                       onOpenChange={setDeleteUserModal}
                       modalButtonClick={() => {
                         setDeleteUserModal(true);
-                        setSelectedUser(item)
+                        setSelectedUser(item);
                       }}
-                      user={selectedUser }
+                      user={selectedUser}
                       refreshUsers={getUsers}
                     />
                     <EditUserModal
@@ -125,7 +122,12 @@ export default function AdminPanel() {
                     <PromptBalanceModal
                       open={balanceModal}
                       onOpenChange={setBalanceModal}
-                      modalButtonClick={() => setBalanceModal(true)}
+                      modalButtonClick={() => {
+                        setBalanceModal(true);
+                        setSelectedUser(item);
+                      }}
+                      user={selectedUser}
+                      refreshUsers={getUsers}
                     />
                   </TableCell>
                 </TableRow>
