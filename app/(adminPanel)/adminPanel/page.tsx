@@ -82,6 +82,7 @@ export default function AdminPanel() {
             open={addUserModal}
             onOpenChange={setAddUserModal}
             modalButtonClick={() => setAddUserModal(true)}
+            refreshUsers={getUsers}
           />
         </div>
         <div className="overflow-x-auto max-h-[85vh]">
