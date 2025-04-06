@@ -61,7 +61,7 @@ export default function PromptBalance() {
     try {
       const res = await fetch("/api/user", {
         method: "DELETE",
-        body: JSON.stringify({ id: "9d134e64-6cb3-421a-aa76-222857a5e0c3"}),
+        body: JSON.stringify({ id: "9d134e64-6cb3-421a-aa76-222857a5e0c3" }),
         headers: {
           "Content-Type": "application/json", // Add content type header
         },
@@ -121,6 +121,22 @@ export default function PromptBalance() {
     }
   }, []);
 
+  const createAdminHandler = useCallback(async () => {
+    console.log("add user");
+    try {
+      const res = await fetch("/api/createAdmin", {
+        method: "POST",
+      });
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const json = await res.json();
+      console.log(json);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  }, []);
+
   return (
     <>
       <button className="bg-red-300" onClick={decrementBalanceHandler}>
@@ -140,6 +156,9 @@ export default function PromptBalance() {
       </button>
       <button className="bg-gray-300 ml-2" onClick={addUserHandler}>
         add user
+      </button>
+      <button className="bg-yellow-300 ml-2" onClick={createAdminHandler}>
+        create admin
       </button>
     </>
   );

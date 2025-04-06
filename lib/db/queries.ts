@@ -466,7 +466,7 @@ export async function getUsers() {
 export async function deleteUser(id: string) {
   try {
     const chats = await db.select().from(chat).where(eq(chat.userId, id));
-    console.log('chat' ,chats)
+    console.log("chat", chats);
 
     await Promise.all(
       chats.map(async (chat) => {
@@ -477,7 +477,7 @@ export async function deleteUser(id: string) {
     await db.delete(chat).where(eq(chat.userId, id)).execute();
 
     const deletedUser = await db.delete(user).where(eq(user.id, id)).execute();
-    console.log('ssss')
+    console.log("ssss");
     return deletedUser;
   } catch (error) {
     console.error("Failed to delete user:", error);
@@ -502,7 +502,7 @@ export async function editUser(
     if (!findedUser) {
       throw new Error("User not found");
     }
-    
+
     const updatedUser: Partial<UserUpdateParams> = {};
     if (role) {
       updatedUser.role = role;
@@ -526,6 +526,30 @@ export async function editUser(
     return finalUpdatedUser[0];
   } catch (error) {
     console.error("Failed to edit user:", error);
+    throw error;
+  }
+}
+
+export async function createAdmin() {
+  try {
+    const existedUser = await db
+      .select()
+      .from(user)
+      .where(eq(user.email, "admin"));
+    console.log("existedUser", existedUser);
+    if (existedUser.length > 0) {
+      return "admin user is already exist";
+    } else {
+      const salt = genSaltSync(10);
+      const hash = hashSync("admin", salt);
+      const createdAdmin = await db
+        .insert(user)
+        .values({ email: "admin", password: hash, role: "admin" });
+        console.log(createdAdmin)
+      return "admin user is create now";
+    }
+  } catch (error) {
+    console.error("Failed to create admin:", error);
     throw error;
   }
 }
