@@ -118,7 +118,12 @@ export default function AdminPanel() {
                     <EditUserModal
                       open={editUserModal}
                       onOpenChange={setEditUserModal}
-                      modalButtonClick={() => setEditUserModal(true)}
+                      modalButtonClick={() => {
+                        setEditUserModal(true);
+                        setSelectedUser(item);
+                      }}
+                      user={selectedUser}
+                      refreshUsers={getUsers}
                     />
                     <PromptBalanceModal
                       open={balanceModal}

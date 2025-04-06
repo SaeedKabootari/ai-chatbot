@@ -64,7 +64,7 @@ const AddUserModal: React.FC<AddUserModalProps> = (props) => {
       setPasswordError("");
     }
   };
-  const addUserHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const addUserHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setFormError("");
     if (
       email.length &&
