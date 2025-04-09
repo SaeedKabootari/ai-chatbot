@@ -40,7 +40,7 @@ const DeleteUserModal: React.FC<DeleteUserModalProps> = (props) => {
     props.onOpenChange(false)
   };
 
-  console.log(props.user);
+  // console.log(props.user);
   return (
     <Dialog open={props.open} onOpenChange={props.onOpenChange}>
       <ModalButton onClick={props.modalButtonClick} tooltipText="Delete User">

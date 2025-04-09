@@ -2,7 +2,7 @@
 import { ChevronUp } from "lucide-react";
 import Image from "next/image";
 import type { User } from "next-auth";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 
 import {
@@ -18,10 +18,14 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export function SidebarUserNav({ user }: { user: User }) {
   const { setTheme, theme } = useTheme();
   const router = useRouter();
+  // const {data:session ,status} = useSession()
+
+  // useEffect(()=>{console.log(status,session)},[status,session])
 
   return (
     <SidebarMenu>
@@ -55,7 +59,8 @@ export function SidebarUserNav({ user }: { user: User }) {
               <>
                 <DropdownMenuItem
                   className="cursor-pointer"
-                  onSelect={() => router.push("/adminPanel")}
+                  onSelect={() =>{
+                      router.push("/adminPanel")} }
                 >
                   {`admin panel`}
                 </DropdownMenuItem>
